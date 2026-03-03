@@ -17,6 +17,7 @@ body{
     height:100vh;
     background:linear-gradient(#f8a5c2,#f78fb3);
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
     font-family:cursive;
@@ -26,8 +27,8 @@ body{
 /* STORY CONTAINER */
 .story{
     width:100%;
-    max-width:430px;
     height:100%;
+    max-width:430px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -113,9 +114,6 @@ video{
 
 <body>
 
-<!-- 🎵 MÜZİK -->
-<audio id="music" src="muzik.mp3" loop></audio>
-
 <div class="story">
 
 <div id="topVideoBox">
@@ -144,18 +142,11 @@ video{
 <script>
 function openLetter(){
 
-    // 🎵 MÜZİK BAŞLAT (mobil uyumlu)
-    const music = document.getElementById("music");
-    music.volume = 0.8;
-    music.play().catch(() => {});
-
-    // GÖSTER/GİZLE
     document.getElementById("envelope").style.display="none";
     document.getElementById("message").style.display="block";
     document.getElementById("topVideoBox").style.display="block";
     document.getElementById("bottomVideoBox").style.display="block";
 
-    // KONFETİ
     for(let i=0;i<40;i++){
         let conf=document.createElement("div");
         conf.className="confetti";
@@ -165,7 +156,6 @@ function openLetter(){
         setTimeout(()=>conf.remove(),3000);
     }
 
-    // KALP
     setInterval(()=>{
         let heart=document.createElement("div");
         heart.className="heart";
