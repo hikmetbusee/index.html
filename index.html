@@ -68,7 +68,7 @@ body{
     padding:0 20px;
 }
 
-/* ALT VİDEO (başta gizli) */
+/* ALT VİDEO */
 #bottomVideoBox{
     display:none;
     width:90%;
@@ -82,7 +82,7 @@ body{
     width:100%;
 }
 
-/* KALP ANİMASYONU */
+/* KALP */
 .heart{
     position:fixed;
     bottom:-10px;
@@ -99,7 +99,6 @@ body{
     position:fixed;
     width:10px;
     height:10px;
-    background:red;
     top:0;
     animation:fall 3s linear forwards;
 }
@@ -110,6 +109,11 @@ body{
 </head>
 
 <body>
+
+<!-- 🎵 MÜZİK -->
+<audio id="music" loop>
+    <source src="muzik.mp3" type="audio/mp3">
+</audio>
 
 <!-- ÜST VİDEO -->
 <div id="topVideoBox">
@@ -139,6 +143,10 @@ body{
 <script>
 function openLetter(){
 
+    // 🎵 MÜZİĞİ BAŞLAT
+    let music = document.getElementById("music");
+    music.play();
+
     // ZARFI GİZLE
     document.getElementById("envelope").style.display="none";
 
@@ -149,7 +157,7 @@ function openLetter(){
     document.getElementById("topVideoBox").style.display="block";
     document.getElementById("bottomVideoBox").style.display="block";
 
-    // KONFETİ PATLAT
+    // KONFETİ
     for(let i=0;i<50;i++){
         let conf=document.createElement("div");
         conf.className="confetti";
