@@ -13,7 +13,7 @@ body{
     overflow-x:hidden;
 }
 
-/* ÜST VİDEO (başta gizli) */
+/* ÜST VİDEO */
 #topVideoBox{
     display:none;
     width:90%;
@@ -40,7 +40,6 @@ body{
     cursor:pointer;
     border-radius:10px;
     box-shadow:0 10px 30px rgba(0,0,0,0.3);
-    transition:0.5s;
 }
 .envelope:before{
     content:'';
@@ -90,8 +89,8 @@ body{
     animation:floatUp 4s linear infinite;
 }
 @keyframes floatUp{
-    0%{transform:translateY(0) scale(1); opacity:1;}
-    100%{transform:translateY(-800px) scale(1.5); opacity:0;}
+    0%{transform:translateY(0); opacity:1;}
+    100%{transform:translateY(-800px); opacity:0;}
 }
 
 /* KONFETİ */
@@ -111,13 +110,11 @@ body{
 <body>
 
 <!-- 🎵 MÜZİK -->
-<audio id="music" loop>
-    <source src="muzik.mp3" type="audio/mp3">
-</audio>
+<audio id="music" src="muzik.mp3" loop></audio>
 
 <!-- ÜST VİDEO -->
 <div id="topVideoBox">
-    <video autoplay muted loop controls>
+    <video autoplay muted loop>
         <source src="ustvideo.mp4" type="video/mp4">
     </video>
 </div>
@@ -135,7 +132,7 @@ body{
 
 <!-- ALT VİDEO -->
 <div id="bottomVideoBox">
-    <video autoplay muted loop controls>
+    <video autoplay muted loop>
         <source src="altvideo.mp4" type="video/mp4">
     </video>
 </div>
@@ -143,9 +140,12 @@ body{
 <script>
 function openLetter(){
 
-    // 🎵 MÜZİĞİ BAŞLAT
-    let music = document.getElementById("music");
-    music.play();
+    // 🎵 MÜZİK (hata yakalamalı)
+    const music = document.getElementById("music");
+    music.volume = 0.7;
+    music.play().catch(function(error){
+        console.log("Müzik başlatılamadı:", error);
+    });
 
     // ZARFI GİZLE
     document.getElementById("envelope").style.display="none";
@@ -163,18 +163,16 @@ function openLetter(){
         conf.className="confetti";
         conf.style.left=Math.random()*100+"%";
         conf.style.background="hsl("+Math.random()*360+",100%,50%)";
-        conf.style.animationDuration=(2+Math.random()*2)+"s";
         document.body.appendChild(conf);
         setTimeout(()=>conf.remove(),3000);
     }
 
-    // UÇAN KALPLER
+    // KALP
     setInterval(()=>{
         let heart=document.createElement("div");
         heart.className="heart";
         heart.innerHTML="💖";
         heart.style.left=Math.random()*100+"%";
-        heart.style.animationDuration=(3+Math.random()*2)+"s";
         document.body.appendChild(heart);
         setTimeout(()=>heart.remove(),4000);
     },300);
