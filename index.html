@@ -2,64 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <title>Doğum Günü</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
-    height:100vh;
+    margin:0;
     background:linear-gradient(#f8a5c2,#f78fb3);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    font-family:cursive;
-    overflow:hidden;
-}
-
-/* STORY CONTAINER */
-.story{
-    width:100%;
-    height:100%;
-    max-width:430px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    position:relative;
     text-align:center;
+    font-family:cursive;
+    overflow-x:hidden;
 }
 
-/* VİDEOLAR */
-#topVideoBox, #bottomVideoBox{
+/* ÜST VİDEO */
+#topVideoBox{
     display:none;
     width:90%;
+    max-width:400px;
+    height:250px;
+    margin:40px auto 20px auto;
     border-radius:20px;
     overflow:hidden;
-    margin:10px 0;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
-video{
+#topVideoBox video{
     width:100%;
-    height:auto;
+    height:100%;
+    object-fit:cover;
 }
 
 /* ZARF */
 .envelope{
-    width:80%;
-    max-width:280px;
-    height:180px;
+    width:300px;
+    height:200px;
     background:#ffb6c1;
+    margin:100px auto;
     position:relative;
     cursor:pointer;
-    border-radius:15px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 .envelope:before{
     content:'';
@@ -72,8 +52,8 @@ video{
 .click-text{
     position:absolute;
     width:100%;
-    top:70px;
-    font-size:20px;
+    top:80px;
+    font-size:22px;
     color:white;
     font-weight:bold;
 }
@@ -81,87 +61,119 @@ video{
 /* YAZI */
 .message{
     display:none;
-    font-size:22px;
+    font-size:28px;
     color:white;
-    margin:15px 20px;
+    margin-top:20px;
+    padding:0 20px;
+}
+
+/* ALT VİDEO */
+#bottomVideoBox{
+    display:none;
+    width:90%;
+    max-width:400px;
+    margin:30px auto;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
+#bottomVideoBox video{
+    width:100%;
 }
 
 /* KALP */
 .heart{
-    position:absolute;
-    bottom:-20px;
+    position:fixed;
+    bottom:-10px;
     font-size:20px;
     animation:floatUp 4s linear infinite;
 }
 @keyframes floatUp{
     0%{transform:translateY(0); opacity:1;}
-    100%{transform:translateY(-100vh); opacity:0;}
+    100%{transform:translateY(-800px); opacity:0;}
 }
 
 /* KONFETİ */
 .confetti{
-    position:absolute;
-    width:8px;
-    height:8px;
+    position:fixed;
+    width:10px;
+    height:10px;
     top:0;
     animation:fall 3s linear forwards;
 }
 @keyframes fall{
-    to{transform:translateY(100vh) rotate(360deg); opacity:0;}
+    to{transform:translateY(800px) rotate(360deg); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="story">
+<!-- 🎵 MÜZİK -->
+<audio id="music" src="muzik.mp3" loop></audio>
 
+<!-- ÜST VİDEO -->
 <div id="topVideoBox">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop>
         <source src="ustvideo.mp4" type="video/mp4">
     </video>
 </div>
 
+<!-- ZARF -->
 <div class="envelope" onclick="openLetter()" id="envelope">
     <div class="click-text">TIKLA 💌</div>
 </div>
 
+<!-- YAZI -->
 <div class="message" id="message">
 🌸✨ DOĞUM GÜNÜN KUTLU OLSUN ANNECİM 🧸💖<br>
 İYİ Kİ DOĞDUN 🎂🎉🥳💫
 </div>
 
+<!-- ALT VİDEO -->
 <div id="bottomVideoBox">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop>
         <source src="altvideo.mp4" type="video/mp4">
     </video>
-</div>
-
 </div>
 
 <script>
 function openLetter(){
 
+    // 🎵 MÜZİK (hata yakalamalı)
+    const music = document.getElementById("music");
+    music.volume = 0.7;
+    music.play().catch(function(error){
+        console.log("Müzik başlatılamadı:", error);
+    });
+
+    // ZARFI GİZLE
     document.getElementById("envelope").style.display="none";
+
+    // YAZIYI GÖSTER
     document.getElementById("message").style.display="block";
+
+    // VİDEOLARI GÖSTER
     document.getElementById("topVideoBox").style.display="block";
     document.getElementById("bottomVideoBox").style.display="block";
 
-    for(let i=0;i<40;i++){
+    // KONFETİ
+    for(let i=0;i<50;i++){
         let conf=document.createElement("div");
         conf.className="confetti";
         conf.style.left=Math.random()*100+"%";
         conf.style.background="hsl("+Math.random()*360+",100%,50%)";
-        document.querySelector(".story").appendChild(conf);
+        document.body.appendChild(conf);
         setTimeout(()=>conf.remove(),3000);
     }
 
+    // KALP
     setInterval(()=>{
         let heart=document.createElement("div");
         heart.className="heart";
         heart.innerHTML="💖";
         heart.style.left=Math.random()*100+"%";
-        document.querySelector(".story").appendChild(heart);
+        document.body.appendChild(heart);
         setTimeout(()=>heart.remove(),4000);
     },300);
 }
